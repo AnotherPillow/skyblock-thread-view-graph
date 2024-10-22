@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Thread View Graph</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+        }
+        canvas {
+            background-color: #1d1d1d;
+            border-radius: 1em;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="chart" style="width:100%;max-width:1500px"></canvas>    
+
+    <script>
+        const RAW_CSV = `<%= csv_raw %>`
+        const parsed = RAW_CSV.split('\n').filter(x => x.trim() != '').map(x => x.split(','))
+
+        const [x, y] = [
+            parsed.map(item => item[0]),
+            parsed.map(item => item[1])
+        ]
+
+        var chart = new Chart('chart', {
+            type: 'line',
+            data: {
+                labels: x,
+                datasets: [{
+                    label: 'Thread views',
+                    data: y,
+                    backgroundColor: 'pink',
+                    borderColor: 'hotpink',
+                    tension: 0, // make the lines straight
+                    
+                }]
+            },
+            options: {
+                animation: true,
+            }
+        })
+    </script>
+</body>
+</html>
